@@ -7,8 +7,12 @@ environment:
   sdk: '>=3.2.0-42.1.beta <4.0.0'
 
 dependencies:
+  animated_text_kit: ^4.2.2
+  cloud_firestore: ^4.9.1
+  firebase_auth: ^4.9.0
   flutter:
     sdk: flutter
+  shared_preferences: ^2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +21,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Commissioner
+      fonts:
+        - asset: fonts/Commissioner-Medium.ttf
+    - family: Pacifico
+      fonts:
+        - asset: fonts/Pacifico-Regular.ttf
+        

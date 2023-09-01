@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import "package:flutter/material.dart";
 
 import 'Signup.dart';
@@ -10,86 +11,101 @@ class Welcomepage extends StatefulWidget{
 }
 
 
-class _WelcomepageState extends State<Welcomepage>{
+class _WelcomepageState extends State<Welcomepage>with TickerProviderStateMixin {
+  
+  
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundcolor,
       
-      body:Stack(
-        
-        children: [
-
-          Positioned(
-            top:375,
-            left:25,
-            child: Container(
-              height:400,
-              width: 400,
+      body:SafeArea(
+        child: Center(
+          child:Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              Text("NEWZZ",style:TextStyle(fontSize: 50,
+              fontWeight: FontWeight.w600,
+            
+              color: const Color.fromARGB(255, 205, 205, 205))),
               
-              decoration: ShapeDecoration(
-                color: Color.fromARGB(255, 134, 134, 134),
-                shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50),
-                bottomLeft: Radius.circular(0),
-                ),
-                ),
-                ),
-              child:Padding(
-                padding: const EdgeInsets.only(left: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomButton(onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Login()));
-                    }, colours: const Color.fromARGB(255, 235, 235, 235)
-                    , text: "Login"),
-                    SizedBox(
-                      height: 40,
+      
+              Padding(
+                padding: const EdgeInsets.only(bottom: 120),
+                child: AnimatedTextKit(
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Welcome',
+                    textStyle: const TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 61, 61, 61),
                     ),
-                    CustomButton(onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Signup()));
-                    }, colours: const Color.fromARGB(255, 235, 235, 235)
-                    , text: "Signup"),
-                  ],
-                ),
+                    speed: const Duration(milliseconds: 300),
+                  ),
+                ],
+                
+                
+                        ),
               ),
             
+      
+            Container(
+            height:300,
+            width: double.infinity,
+            
+            decoration: BoxDecoration(
+              color: kContainercolor,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50))
+            ),
+            child:Column(
+              children: [
+                Padding(
+            padding: const EdgeInsets.only(bottom: 50,top: 80),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomButton(onPressed: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Login()));
+                }, colours: kWelcompagebutton
+                , text: "Login"),
+                SizedBox(
+                  height: 40,
+                ),
+                CustomButton(onPressed: (){
+                
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Signup()));
+                }, colours: kWelcompagebutton
+                , text: "Signup"),
+              ],
+            ),
                   ),
-          ),
+            
+              ],
+            ),
+            
+            ),
+      
+            
+            ],),
           
-        ],
-    
-      ),
-    );
-  }
-}
-
-
-
-class CustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final Color colours;
-  final String text;
-
-  CustomButton({required this.onPressed,required this.colours,required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 3),
-      child: SizedBox(
-        height: 60,
-        width: 250,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(backgroundColor: colours,shadowColor: Colors.black),
-          onPressed: onPressed,
-          child: Text(text),
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
