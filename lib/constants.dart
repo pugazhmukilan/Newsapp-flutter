@@ -6,6 +6,12 @@ const Color kContainercolor =  Color.fromARGB(255, 40, 40, 40);
 const Color kWelcompagebutton = Color.fromARGB(255, 235, 235, 235);
 
 
+//SELECTION BUTTON COLORS
+MaterialStateProperty <Color> unpressedcolor =  MaterialStatePropertyAll(const Color.fromARGB(255, 36, 36, 36));
+MaterialStateProperty <Color> pressedcolor =  MaterialStatePropertyAll(Color.fromARGB(255, 249, 225, 255));
+
+
+
 //CUSTOM BUTTON FOR THE LOGIN PAGES
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -83,3 +89,41 @@ class entrytext extends StatelessWidget {
     );
   }
 }
+
+
+
+class Selectionbutton extends StatefulWidget{
+
+  @override
+  _SelectionbuttonState createState() => _SelectionbuttonState();
+
+}class _SelectionbuttonState extends State <Selectionbutton>{
+  bool ispressed = false;
+  @override
+  Widget build(BuildContext context){
+      return Container(
+        height: 80,
+        width:80,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+        child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: (ispressed) ? pressedcolor : unpressedcolor
+                          
+                      
+                      ),
+                        onPressed: (){
+                          setState(() {
+                            if (ispressed ==true){
+                              ispressed=false;
+      
+                            }
+                            else{
+                              ispressed =true;
+                            }
+                          });
+                            
+                      },
+                      child: Text("sample")),
+      );
+
+  }}

@@ -1,8 +1,8 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:news_app/interest.dart";
 
 import "constants.dart";
-import "firebase_infosaver_loading_page.dart";
 
 
 class Signup extends StatefulWidget{
@@ -63,7 +63,7 @@ class _Signup extends State<Signup>{
 
                   if (newUser != null) {
                     print("Registered correctly");
-                    Navigator.push(context,MaterialPageRoute(builder: (context)=>Info_loader()));
+                    Navigator.push(context,MaterialPageRoute(builder: (context)=>Interest()));
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Congraluation", content: " You Successfully Signed up")));
                   
                   }else{
