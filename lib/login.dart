@@ -103,6 +103,7 @@ class _LoginState extends State<Login>{
                   Text("Don't have an account?",style:TextStyle(color: const Color.fromARGB(255, 198, 198, 198))),
       
                   TextButton(onPressed: (){
+                    Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
                   },
                   child: Text("Sign up",style: TextStyle(color:Colors.blue),))

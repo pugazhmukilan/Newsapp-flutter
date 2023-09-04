@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:news_app/interest.dart";
+import "package:news_app/login.dart";
 
 import "constants.dart";
 
@@ -93,7 +94,8 @@ class _Signup extends State<Signup>{
                   Text("Already have an account?",style:TextStyle(color: const Color.fromARGB(255, 198, 198, 198))),
       
                   TextButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                   },
                   child: Text("Login",style: TextStyle(color:Colors.blue),))
                 ],
