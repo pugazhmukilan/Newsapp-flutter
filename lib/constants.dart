@@ -101,29 +101,32 @@ class Selectionbutton extends StatefulWidget{
   bool ispressed = false;
   @override
   Widget build(BuildContext context){
-      return Container(
-        height: 80,
-        width:80,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-        child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: (ispressed) ? pressedcolor : unpressedcolor
-                          
-                      
-                      ),
-                        onPressed: (){
-                          setState(() {
-                            if (ispressed ==true){
-                              ispressed=false;
-      
-                            }
-                            else{
-                              ispressed =true;
-                            }
-                          });
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 120,
+          width: 120,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),shape: BoxShape.rectangle),
+          child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: (ispressed) ? pressedcolor : unpressedcolor
                             
-                      },
-                      child: Text("sample")),
+                        
+                        ),
+                          onPressed: (){
+                            setState(() {
+                              if (ispressed ==true){
+                                ispressed=false;
+        
+                              }
+                              else{
+                                ispressed =true;
+                              }
+                            });
+                              
+                        },
+                        child: Text("sample")),
+        ),
       );
 
   }}

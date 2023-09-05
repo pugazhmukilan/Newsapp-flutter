@@ -64,6 +64,7 @@ class _Signup extends State<Signup>{
 
                   if (newUser != null) {
                     print("Registered correctly");
+                    Navigator.pop(context);
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>Interest()));
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Congraluation", content: " You Successfully Signed up")));
                   

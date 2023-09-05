@@ -8,72 +8,54 @@ class Interest extends StatefulWidget{
 }
 
 class _InterestState extends State<Interest>{
-   
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body:Column(
-
-        children: [
-          Text("Interest ",style: TextStyle(fontSize: 40),),
-
-          SingleChildScrollView(
-            child:Column(
-              children: [
-
-                Row(
-                  children: [
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    
-                  ],
-                ),
-                Row(
-                  children: [
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    
-                  ],
-                ),
-                Row(
-                  children: [
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    
-                  ],
-                ),
-                Row(
-                  children: [
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    
-                  ],
-                ),
-                Row(
-                  children: [
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    
-                  ],
-                ),
-                Row(
-                  children: [
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    Selectionbutton(),
-                    
-                  ],
-                )
-              ],
+  
+      return Scaffold(
+        backgroundColor: kBackgroundcolor,
+        
+        body:Column(
+          children:[
+            Expanded(
+              flex:1,
+              child: SizedBox(
+                height: 80,
+              ),
             ),
-          )
-        ],
-      ),
-    );
+            
+            Expanded(
+              flex: 4,
+              child: CustomScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        slivers: [
+                
+                // ignore: prefer_const_constructors
+              
+                         //search bar
+                    
+                        
+                        SliverList(
+                delegate: SliverChildBuilderDelegate(
+                
+                    
+                  
+                  (BuildContext context,int index){
+                    return Expanded(
+                      child: Row(children: [
+                        Selectionbutton(),
+                        Selectionbutton(),
+                        Selectionbutton(),]),
+                    );
+                  },
+                  childCount: 20,
+                  
+                ),
+                     
+                         ),
+                         ]
+                       ),
+             ),]
+        ),
+      );
   }
 }

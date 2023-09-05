@@ -4,9 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import "Signup.dart";
 import "constants.dart";
-import "firebase_infosaver_loading_page.dart";
-
-
+import "interest.dart";
 class Login extends StatefulWidget{
 
   @override
@@ -72,7 +70,9 @@ class _LoginState extends State<Login>{
                 // ignore: unnecessary_null_comparison
                 if (user != null){
                   print("everthying went well");
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Info_loader()));
+                  Navigator.pop(context);
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Interest()));
+                  //Navigator.push(context,MaterialPageRoute(builder: (context)=>Info_loader()));
                   emailcontroller.clear();
                   
                   passwordcontroller.clear();
