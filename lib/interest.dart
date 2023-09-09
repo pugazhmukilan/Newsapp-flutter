@@ -51,20 +51,23 @@ class _InterestState extends State<Interest>{
                   
                   (BuildContext context,int index){
                     return Expanded(
-                      child: Row(children: [
-                        Selectionbutton(),
-                        Selectionbutton(),
-                        Selectionbutton(),]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        
+                        children: [
+                        Selectionbutton(ico:Icons.alarm_add,topic:"Time"),
+                        Selectionbutton(ico:Icons.alarm_add,topic:"Time"),
+                        ]),
                     );
                   },
                   childCount: 20,
                   
                 ),
-                     
-                         ),
-                         ]
-                       ),
-             ),]
+                    
+                        ),
+                        ]
+                      ),
+            ),]
         ),
       );
   }

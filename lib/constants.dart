@@ -92,41 +92,56 @@ class entrytext extends StatelessWidget {
 
 
 
-class Selectionbutton extends StatefulWidget{
 
+  class Selectionbutton extends StatefulWidget {
   @override
+  late IconData ico;
+  late String topic;
+  Selectionbutton({required this.ico,required this.topic});
   _SelectionbuttonState createState() => _SelectionbuttonState();
+}
 
-}class _SelectionbuttonState extends State <Selectionbutton>{
+class _SelectionbuttonState extends State<Selectionbutton> {
   bool ispressed = false;
-  @override
-  Widget build(BuildContext context){
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 120,
-          width: 120,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),shape: BoxShape.rectangle),
-          child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: (ispressed) ? pressedcolor : unpressedcolor
-                            
-                        
-                        ),
-                          onPressed: (){
-                            setState(() {
-                              if (ispressed ==true){
-                                ispressed=false;
-        
-                              }
-                              else{
-                                ispressed =true;
-                              }
-                            });
-                              
-                        },
-                        child: Text("sample")),
-        ),
-      );
 
-  }}
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Container(
+          height: 110,
+          width: 160,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            shape: BoxShape.rectangle,
+          ),
+          child: ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0), // Adjust the radius as needed
+                ),
+              ),
+              backgroundColor: (ispressed) ? pressedcolor : unpressedcolor
+              ),
+            
+            onPressed: () {
+              setState(() {
+                ispressed = !ispressed; // Toggle the button state
+              });
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(widget.ico,size: 20),
+                Text(widget.topic),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    
+  }
+}

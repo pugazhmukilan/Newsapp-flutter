@@ -76,7 +76,7 @@ class _LoginState extends State<Login>{
                   emailcontroller.clear();
                   
                   passwordcontroller.clear();
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Congraluation", content: " You Successfully Logged In")));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Congrulation", content: " You Successfully Logged In")));
                 }else{
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Error", content: " ")));
                 }
