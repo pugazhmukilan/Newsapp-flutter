@@ -91,11 +91,11 @@ class entrytext extends StatelessWidget {
 }
 
 
-
+List <String> interest =[];
 
   class Selectionbutton extends StatefulWidget {
   @override
-  late IconData ico;
+  late String ico;
   late String topic;
   Selectionbutton({required this.ico,required this.topic});
   _SelectionbuttonState createState() => _SelectionbuttonState();
@@ -128,13 +128,17 @@ class _SelectionbuttonState extends State<Selectionbutton> {
             
             onPressed: () {
               setState(() {
-                ispressed = !ispressed; // Toggle the button state
+                ispressed = !ispressed;
+                ispressed ? interest.add(widget.topic):interest.remove(widget.topic);
+              
+                print(interest);
+                // Toggle the button state
               });
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(widget.ico,size: 20),
+                Image.asset(widget.ico),
                 Text(widget.topic),
               ],
             ),
@@ -145,3 +149,5 @@ class _SelectionbuttonState extends State<Selectionbutton> {
     
   }
 }
+
+

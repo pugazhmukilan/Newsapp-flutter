@@ -28,47 +28,49 @@ class _InterestState extends State<Interest>{
                   Text("choose your intrested topics for the news feed",style:TextStyle(fontFamily:"Commissioner",
                   fontSize: 12,
                   color: Color.fromARGB(255, 137, 137, 137) )),
-           ] ),
+          ] ),
                 height: 80,
               ),
             ),
             
             Expanded(
               flex: 4,
-              child: CustomScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        slivers: [
-                
-                // ignore: prefer_const_constructors
-              
-                         //search bar
-                    
-                        
-                        SliverList(
-                delegate: SliverChildBuilderDelegate(
-                
-                    
-                  
-                  (BuildContext context,int index){
-                    return Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        
-                        children: [
-                        Selectionbutton(ico:Icons.alarm_add,topic:"Time"),
-                        Selectionbutton(ico:Icons.alarm_add,topic:"Time"),
-                        ]),
-                    );
-                  },
-                  childCount: 20,
-                  
-                ),
-                    
-                        ),
-                        ]
-                      ),
-            ),]
+              child:SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child:Column(
+                  children: [
+                    Row(
+                      children: [
+                        Selectionbutton(ico: "icons/sports", topic: 'time'),
+                        Selectionbutton(ico: "icons/sports", topic: 'time'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Selectionbutton(ico:"icons/sports", topic: 'time'),
+                        Selectionbutton(ico: "icons/sports", topic: 'time'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Selectionbutton(ico:"icons/sports", topic: 'time'),
+                        Selectionbutton(ico: "icons/sports", topic: 'time'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Selectionbutton(ico: "icons/sports", topic: 'time'),
+                        Selectionbutton(ico: "icons/sports", topic: 'time'),
+                      ],
+                    ),
+
+                  ],
+                )
+              ),
         ),
-      );
+          ]
+        ),
+        );
+      
   }
 }
