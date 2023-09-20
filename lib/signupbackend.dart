@@ -31,29 +31,3 @@ void checkuserduplicate(String newusername){
         }}});
 
 }
-
-void addorupdateinterest()async{
-  
-  user = _auth.currentUser;
-  email = user?.email;
-
-  try {
-      DocumentReference docRef = FirebaseFirestore.instance.collection("usernames").doc("$email");
-
-      DocumentSnapshot docSnapshot = await docRef.get();
-
-      if (docSnapshot.exists) {
-        print('Document already exists.');
-      } else {
-        await docRef.set({
-          'field1': email,
-          'field2': "interest",
-          // Add other fields as needed
-        });
-        print('Document added successfully.');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-
-}

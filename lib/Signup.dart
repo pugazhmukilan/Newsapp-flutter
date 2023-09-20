@@ -1,9 +1,9 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:news_app/interest.dart";
 import "package:news_app/login.dart";
 
 import "constants.dart";
+import "loadingpageduringsignup.dart";
 
 
 class Signup extends StatefulWidget{
@@ -57,25 +57,9 @@ class _Signup extends State<Signup>{
               padding: const EdgeInsets.only(top:60,bottom: 60),
               child: CustomButton(onPressed: ()async{
                 
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoadingPagesignup(emailtext: emailcontroller.text,passwordtext: passwordcontroller.text,)));
                 
-                
-                try {
-                  final newUser = await _auth.createUserWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text);
-
-                  if (newUser != null) {
-                    print("Registered correctly");
-                    Navigator.pop(context);
-                    Navigator.push(context,MaterialPageRoute(builder: (context)=>Interest()));
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Congraluation", content: " You Successfully Signed up")));
-                  
-                  }else{
-                    print("this is else part");
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Error", content: "There is a Error")));
-                  }
-                } catch (e) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ErrorDialog(title: "Error", content: "$e ")));
-                  print("there is a error ==================================$e");
-  }
+              
                 
                       
                     

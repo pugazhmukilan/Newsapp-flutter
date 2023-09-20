@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import "package:news_app/news.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
 import "Signup.dart";
 import "constants.dart";
-import "interest.dart";
 class Login extends StatefulWidget{
 
   @override
@@ -71,7 +71,7 @@ class _LoginState extends State<Login>{
                 if (user != null){
                   print("everthying went well");
                   Navigator.pop(context);
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Interest()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Newspage()));
                   //Navigator.push(context,MaterialPageRoute(builder: (context)=>Info_loader()));
                   emailcontroller.clear();
                   
