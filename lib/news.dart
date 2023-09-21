@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:news_app/constants.dart";
+import "package:news_app/interest.dart";
 
 
 
@@ -15,7 +16,13 @@ class _NewspageState extends State<Newspage>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar (title : Text("News"),
-      backgroundColor: Colors.black,),
+      backgroundColor: Colors.black,
+      //add a button in the appbar
+      actions:[IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Interest()));
+      }, icon: Icon(Icons.abc_outlined))]
+      ),
+      
 
       backgroundColor: kBackgroundcolor,
     );
