@@ -72,6 +72,7 @@ class _InterestState extends State<Interest>{
                       child: ElevatedButton(onPressed: ()async{
                          // Replace with the actual interest value
                         await insertOrUpdateArrayData();
+                        Navigator.pop(context);
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Newspage()));
                       
                     
