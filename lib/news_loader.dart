@@ -11,4 +11,3 @@ class  _newsloadstate  extends State <newsloader>{
     return Scaffold();
   }
 }
- 

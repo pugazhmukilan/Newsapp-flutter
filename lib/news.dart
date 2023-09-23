@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
+import "package:flutter_swiper_view/flutter_swiper_view.dart";
 import "package:news_app/constants.dart";
 import "package:news_app/interest.dart";
-
 
 
 class Newspage extends StatefulWidget{
@@ -28,7 +28,39 @@ class _NewspageState extends State<Newspage>{
       backgroundColor: kBackgroundcolor,
       body:Column(
         children: [
-          ButtonRow(listname: names, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136))
+          ButtonRow(listname: subtitles, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
+          Expanded(
+      child: Swiper(
+        itemCount: 4,
+        itemBuilder: (context, index) {
+          return Container(
+            color:kBackgroundcolor,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Container(
+                    child: Column(
+                      children: [
+                        Image.network("https://cdn.hiconsumption.com/wp-content/uploads/2023/09/Best-Luxury-Travel-Trailers-01-Hero.jpg",height: 200,width: 500,),
+                        
+                        
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                          child: Text("the is the new on the new phone which is going to be launched",style: TextStyle(color: Colors.white),),
+                        ),
+
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+        
         ],
       )
     );
@@ -57,7 +89,7 @@ class ButtonRow extends StatefulWidget {
 }
 
 class _ButtonRowState extends State<ButtonRow> {
-  String selectedButton = "all"; // Default selected button
+  String selectedButton = "hello"; // Default selected button
 
   void _handleButtonPress(String buttonName) {
     setState(() {
@@ -109,4 +141,4 @@ class _ButtonRowState extends State<ButtonRow> {
     );
   }
 }
-List<String> names=["hello","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan"];
+List<String> subtitles=["hello","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan"];
