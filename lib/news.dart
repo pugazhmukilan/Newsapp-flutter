@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_swiper_view/flutter_swiper_view.dart";
 import "package:news_app/constants.dart";
 import "package:news_app/interest.dart";
 
@@ -29,37 +28,9 @@ class _NewspageState extends State<Newspage>{
       body:Column(
         children: [
           ButtonRow(listname: subtitles, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
-          Expanded(
-      child: Swiper(
-        itemCount: 4,
-        itemBuilder: (context, index) {
-          return Container(
-            color:kBackgroundcolor,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  Container(
-                    child: Column(
-                      children: [
-                        Image.network("https://cdn.hiconsumption.com/wp-content/uploads/2023/09/Best-Luxury-Travel-Trailers-01-Hero.jpg",height: 200,width: 500,),
-                        
-                        
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-                          child: Text("the is the new on the new phone which is going to be launched",style: TextStyle(color: Colors.white),),
-                        ),
-
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    ),
+          Container(
+            child: Text("hello"),
+          ),
         
         ],
       )
