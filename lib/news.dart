@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_swiper_view/flutter_swiper_view.dart";
 import "package:news_app/constants.dart";
 import "package:news_app/interest.dart";
 
@@ -28,8 +29,16 @@ class _NewspageState extends State<Newspage>{
       body:Column(
         children: [
           ButtonRow(listname: subtitles, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
-          Container(
-            child: Text("hello"),
+          Expanded(
+            child: Swiper(itemCount: subtitles.length,
+              itemBuilder: (context, index) {
+                
+                  return Container(
+                    child: Text("hello this is the sample text"),
+                  );
+              },
+            
+            ),
           ),
         
         ],
