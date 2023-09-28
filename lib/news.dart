@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import "package:flutter/material.dart";
 import "package:flutter_swiper_view/flutter_swiper_view.dart";
 import "package:news_app/constants.dart";
 import "package:news_app/interest.dart";
+
 
 
 class Newspage extends StatefulWidget{
@@ -11,7 +14,39 @@ class Newspage extends StatefulWidget{
 }
 
 class _NewspageState extends State<Newspage>{
+  List<dynamic> subtitles=[];
+  
+    final DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
 
+    Future<void> fetchInterests() async {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  try {
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection('users') // Your collection name
+        .doc('mukilan@gmail.com') // Your document ID
+        .get();
+
+    if (documentSnapshot.exists) {
+      subtitles = documentSnapshot.get('interest');
+      print("fetching the interest");
+      print('Interests: $subtitles');
+    } else {
+      print('Document does not exist');
+    }
+  } catch (error) {
+    print('Failed to retrieve interests: $error');
+  }
+}
+
+  
+
+  @override
+  void initState(){
+    super.initState();
+    fetchInterests();
+
+  }
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -28,9 +63,9 @@ class _NewspageState extends State<Newspage>{
       backgroundColor: kBackgroundcolor,
       body:Column(
         children: [
-          ButtonRow(listname: subtitles, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
+          ButtonRow(listname: names, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
           Expanded(
-            child: Swiper(itemCount: subtitles.length,
+            child: Swiper(itemCount: names.length,
               itemBuilder: (context, index) {
                 
                   return Padding(
@@ -165,4 +200,5 @@ class _ButtonRowState extends State<ButtonRow> {
     );
   }
 }
-List<String> subtitles=["hello","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan","pugazh","mukilan"];
+
+List<String> names= ["puagzh","mukilan"];
