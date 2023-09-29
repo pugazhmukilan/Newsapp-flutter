@@ -62,9 +62,13 @@ class _LoginState extends State<Login>{
               padding: const EdgeInsets.only(top:60,bottom: 60),
               child: CustomButton(onPressed: ()async{
                 
+                
                 try{
-                /*addemail(email);
-                addpassword(password);*/
+                  addemail(emailcontroller.text);
+                addpassword(passwordcontroller.text);
+                
+                print(emailcontroller.text);
+                print( passwordcontroller.text);
                 
                 final user = await _auth.signInWithEmailAndPassword(email: emailcontroller.text, password: passwordcontroller.text);
                 // ignore: unnecessary_null_comparison

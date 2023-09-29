@@ -12,7 +12,7 @@ class Welcomepage extends StatefulWidget{
 
 
 class _WelcomepageState extends State<Welcomepage>with TickerProviderStateMixin {
-  
+  bool _isLoggedIn= true;
   
   
 

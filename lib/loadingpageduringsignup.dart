@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:flutter/material.dart';
 import "package:news_app/constants.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 
 import "Signup.dart";
 import "interest.dart";
@@ -36,6 +37,8 @@ Widget build(BuildContext context){
 
 Future<void> createaccount(BuildContext context, String email, String password) async {
   try {
+    addemail(email);
+    addpassword(password);
     final newUser = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 
@@ -88,3 +91,11 @@ Future<void> createaccount(BuildContext context, String email, String password) 
   }
       
 }*/
+addemail(email) async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.setString('email', email);
+    }
+    addpassword(password) async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.setString('password', password);
+    }

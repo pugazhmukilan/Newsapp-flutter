@@ -14,7 +14,7 @@ class Newspage extends StatefulWidget{
 }
 
 class _NewspageState extends State<Newspage>{
-  List<dynamic> subtitles=[];
+  List<String> subtitles=[];
   
     final DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
 
@@ -28,8 +28,11 @@ class _NewspageState extends State<Newspage>{
         .get();
 
     if (documentSnapshot.exists) {
-      subtitles = documentSnapshot.get('interest');
+      List<dynamic>interest = documentSnapshot.get('interest');
       print("fetching the interest");
+      for (int i =0;i<interest.length;i++){
+        subtitles[i]=interest[i];
+      }
       print('Interests: $subtitles');
     } else {
       print('Document does not exist');
@@ -63,7 +66,7 @@ class _NewspageState extends State<Newspage>{
       backgroundColor: kBackgroundcolor,
       body:Column(
         children: [
-          ButtonRow(listname: names, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
+          ButtonRow(listname: subtitles, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
           Expanded(
             child: Swiper(itemCount: names.length,
               itemBuilder: (context, index) {
