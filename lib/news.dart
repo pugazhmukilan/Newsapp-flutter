@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import "package:flutter/material.dart";
 import "package:flutter_swiper_view/flutter_swiper_view.dart";
 import "package:news_app/constants.dart";
@@ -15,39 +14,44 @@ class Newspage extends StatefulWidget{
 
 class _NewspageState extends State<Newspage>{
   List<String> subtitles=[];
-  
-    final DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
-
-    Future<void> fetchInterests() async {
+  Future<List<String>> fetchInterests(String userEmail) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   try {
     DocumentSnapshot documentSnapshot = await firestore
-        .collection('users') // Your collection name
-        .doc('mukilan@gmail.com') // Your document ID
+        .collection('interest') // Your collection name
+        .doc(userEmail) // Document ID is the user's email in this case
         .get();
 
     if (documentSnapshot.exists) {
-      List<dynamic>interest = documentSnapshot.get('interest');
-      print("fetching the interest");
-      for (int i =0;i<interest.length;i++){
-        subtitles[i]=interest[i];
-      }
-      print('Interests: $subtitles');
+      List<dynamic> interest = documentSnapshot.get('interest');
+
+      return interest is List && interest.every((item) => item is String)
+          ? List<String>.from(interest)
+          : [];
     } else {
       print('Document does not exist');
+      return [];
     }
   } catch (error) {
     print('Failed to retrieve interests: $error');
+    return [];
   }
 }
 
+ void call()async{
+  subtitles=  await fetchInterests("mukilan@gmail.com");
+ }
   
 
   @override
   void initState(){
     super.initState();
-    fetchInterests();
+    print("fetching interest from the firebase");
+    call();
+    print("interest ===============================================================\n============================================================");
+    print(subtitles);
+    
 
   }
   @override
