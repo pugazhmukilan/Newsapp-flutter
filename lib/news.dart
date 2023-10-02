@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import "package:flutter_swiper_view/flutter_swiper_view.dart";
 import "package:news_app/constants.dart";
 import "package:news_app/interest.dart";
+import "package:news_app/welcomepage.dart";
 
-
-
+FirebaseAuth auth =FirebaseAuth.instance;
 class Newspage extends StatefulWidget{
 
   @override
@@ -61,9 +62,21 @@ class _NewspageState extends State<Newspage>{
       backgroundColor: Colors.black,
       //add a button in the appbar
       actions:[IconButton(onPressed: (){
+          Navigator.pop(context);
           
           Navigator.push(context, MaterialPageRoute(builder: (context)=>Interest()));
-      }, icon: Icon(Icons.abc_outlined))]
+      }, icon: Icon(Icons.abc_outlined)),
+      
+      IconButton(onPressed: (){
+        //logout from firebase
+        FirebaseAuth auth = FirebaseAuth.instance;
+        auth.signOut().then((value) async {
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcomepage()));
+
+        });
+        
+      }, icon: Icon(Icons.logout_outlined))]
       ),
       
 
