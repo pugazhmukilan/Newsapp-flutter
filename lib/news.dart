@@ -14,6 +14,7 @@ class Newspage extends StatefulWidget{
 }
 
 class _NewspageState extends State<Newspage>{
+  late String defaultvalue;
   List<String> subtitles=[];
   Future<List<String>> fetchInterests(String userEmail) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -44,6 +45,7 @@ class _NewspageState extends State<Newspage>{
   subtitles=  await fetchInterests("mukilan@gmail.com");
   
   print(subtitles);
+  defaultvalue=subtitles[1];
  }
   
 
@@ -84,7 +86,7 @@ class _NewspageState extends State<Newspage>{
       backgroundColor: kBackgroundcolor,
       body:Column(
         children: [
-          ButtonRow(listname: subtitles, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
+          ButtonRow(listname: subtitles,defaultbutton: defaultvalue, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
           Expanded(
             child: Swiper(itemCount: subtitles.length,
               itemBuilder: (context, index) {
@@ -150,12 +152,13 @@ class _NewspageState extends State<Newspage>{
 
 class ButtonRow extends StatefulWidget {
 
-  late List listname;
+  late List<String> listname;
   late  double height;
   late Color whenselected;
   late Color whennotselected;
   late Color textselected;
   late Color textnotselected;
+  late String defaultbutton;
   
   ButtonRow({required this.listname,
   required this.height,
@@ -163,6 +166,7 @@ class ButtonRow extends StatefulWidget {
   required this.whennotselected,
   required this.textselected,
   required this.textnotselected,
+  required this.defaultbutton,
   });
   @override
   _ButtonRowState createState() => _ButtonRowState();
@@ -170,15 +174,9 @@ class ButtonRow extends StatefulWidget {
 
 class _ButtonRowState extends State<ButtonRow> {
   
-  late String selectedButton; // Default selected button
+  late String selectedButton=widget.defaultbutton; // Default selected button
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.listname.isNotEmpty) {
-      selectedButton = widget.listname[0];
-    }
-  }
+ 
 
   void _handleButtonPress(String buttonName) {
     setState(() {
