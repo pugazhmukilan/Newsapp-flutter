@@ -20,7 +20,7 @@ class _NewspageState extends State<Newspage>{
 
   try {
     DocumentSnapshot documentSnapshot = await firestore
-        .collection('interest') // Your collection name
+        .collection('users') // Your collection name
         .doc(userEmail) // Document ID is the user's email in this case
         .get();
 
@@ -42,16 +42,17 @@ class _NewspageState extends State<Newspage>{
 
  void call()async{
   subtitles=  await fetchInterests("mukilan@gmail.com");
+  
+  print(subtitles);
  }
   
 
   @override
   void initState(){
     super.initState();
-    print("fetching interest from the firebase");
+   
     call();
-    print("interest ===============================================================\n============================================================");
-    print(subtitles);
+    
     
 
   }
@@ -85,7 +86,7 @@ class _NewspageState extends State<Newspage>{
         children: [
           ButtonRow(listname: subtitles, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
           Expanded(
-            child: Swiper(itemCount: names.length,
+            child: Swiper(itemCount: subtitles.length,
               itemBuilder: (context, index) {
                 
                   return Padding(
@@ -168,7 +169,16 @@ class ButtonRow extends StatefulWidget {
 }
 
 class _ButtonRowState extends State<ButtonRow> {
-  String selectedButton = "hello"; // Default selected button
+  
+  late String selectedButton; // Default selected button
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.listname.isNotEmpty) {
+      selectedButton = widget.listname[0];
+    }
+  }
 
   void _handleButtonPress(String buttonName) {
     setState(() {
@@ -221,4 +231,3 @@ class _ButtonRowState extends State<ButtonRow> {
   }
 }
 
-List<String> names= ["puagzh","mukilan"];
