@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 const Color kBackgroundcolor =  Color.fromARGB(255, 10, 10, 10);
 const Color kContainercolor =  Color.fromARGB(255, 40, 40, 40);
 
@@ -90,3 +90,30 @@ class entrytext extends StatelessWidget {
   }
 }
 
+
+//firebase retrivel
+
+Future<List<String>> fetchInterests(String userEmail) async {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  try {
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection('users') // Your collection name
+        .doc(userEmail) // Document ID is the user's email in this case
+        .get();
+
+    if (documentSnapshot.exists) {
+      List<dynamic> interest = documentSnapshot.get('interest');
+
+      return interest is List && interest.every((item) => item is String)
+          ? List<String>.from(interest)
+          : [];
+    } else {
+      print('Document does not exist');
+      return [];
+    }
+  } catch (error) {
+    print('Failed to retrieve interests: $error');
+    return [];
+  }
+}

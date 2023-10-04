@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:news_app/news.dart';
+import 'package:news_app/news_loader.dart';
 import 'package:news_app/welcomepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,7 +32,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         
-        body: isLoggedIn ? Newspage():Welcomepage(),
+        body: isLoggedIn ? Newsloader():Welcomepage(),
       ),
     );
   }

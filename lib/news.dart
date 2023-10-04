@@ -14,7 +14,7 @@ class Newspage extends StatefulWidget{
 }
 
 class _NewspageState extends State<Newspage>{
-  late String defaultvalue;
+  
   List<String> subtitles=[];
   Future<List<String>> fetchInterests(String userEmail) async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -45,7 +45,7 @@ class _NewspageState extends State<Newspage>{
   subtitles=  await fetchInterests("mukilan@gmail.com");
   
   print(subtitles);
-  defaultvalue=subtitles[1];
+  
  }
   
 
@@ -61,14 +61,15 @@ class _NewspageState extends State<Newspage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar (title : Text("News"),
+      appBar: AppBar (title : Text("News",style: TextStyle(color:Colors.white,fontFamily: "Pacifico",fontSize: 35),),
+      
       backgroundColor: Colors.black,
       //add a button in the appbar
       actions:[IconButton(onPressed: (){
           Navigator.pop(context);
           
           Navigator.push(context, MaterialPageRoute(builder: (context)=>Interest()));
-      }, icon: Icon(Icons.abc_outlined)),
+      }, icon: Icon(Icons.abc_outlined,color: Colors.white,)),
       
       IconButton(onPressed: (){
         //logout from firebase
@@ -79,14 +80,14 @@ class _NewspageState extends State<Newspage>{
 
         });
         
-      }, icon: Icon(Icons.logout_outlined))]
+      }, icon: Icon(Icons.logout_outlined,color: Colors.white,))]
       ),
       
 
       backgroundColor: kBackgroundcolor,
       body:Column(
         children: [
-          ButtonRow(listname: subtitles,defaultbutton: defaultvalue, height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
+          ButtonRow(listname: subtitles,defaultbutton: "Currency", height: 50, whenselected: const Color.fromARGB(255, 83, 83, 83), whennotselected: const Color.fromARGB(255, 43, 43, 43), textselected: Colors.white, textnotselected: Color.fromARGB(255, 136, 136, 136)),
           Expanded(
             child: Swiper(itemCount: subtitles.length,
               itemBuilder: (context, index) {
