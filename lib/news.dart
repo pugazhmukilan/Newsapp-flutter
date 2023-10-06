@@ -107,30 +107,28 @@ class _NewspageState extends State<Newspage>{
                             
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              child: Expanded(
-                                child: Container(
-                                  height:400,
-                                  decoration: BoxDecoration(
-                                     color: const Color.fromARGB(255, 3, 30, 53),
-                                     borderRadius: BorderRadius.circular(30)
-                                  ),
-                                 
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      
-                                     
-                                      children: [
-                                      ClipRRect(
-                                      borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
-                                      child: Image.network(
-                                        "https://static.toiimg.com/thumb/imgsize-46090,msid-103973373,width-400,resizemode-4/103973373.jpg",
-                                        height: 190,
-                                      ),
+                              child: Container(
+                                height:400,
+                                decoration: BoxDecoration(
+                                   color: const Color.fromARGB(255, 3, 30, 53),
+                                   borderRadius: BorderRadius.circular(30)
+                                ),
+                               
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    
+                                   
+                                    children: [
+                                    ClipRRect(
+                                    borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+                                    child: Image.network(
+                                      "https://static.toiimg.com/thumb/imgsize-46090,msid-103973373,width-400,resizemode-4/103973373.jpg",
+                                      height: 190,
                                     ),
-                                      Text("this is the sample news for checking\n heheheheh",style: TextStyle(color: Colors.white,)),
-                                    ],),
                                   ),
+                                    Text("this is the sample news for checking\n heheheheh",style: TextStyle(color: Colors.white,)),
+                                  ],),
                                 ),
                               ),
                             );
