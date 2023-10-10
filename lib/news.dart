@@ -1,88 +1,62 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import "package:flutter_swiper_view/flutter_swiper_view.dart";
 import "package:news_app/constants.dart";
-import "package:news_app/interest.dart";
-import "package:news_app/welcomepage.dart";
+
+import "interest.dart";
+import "welcomepage.dart";
 
 FirebaseAuth auth =FirebaseAuth.instance;
 class Newspage extends StatefulWidget{
+  late List<String>subtitles1;
+  Newspage({required this.subtitles1});
 
   @override
   _NewspageState createState()=> _NewspageState();
 }
 
 class _NewspageState extends State<Newspage>{
-  
-  List<String> subtitles=[];
-  Future<List<String>> fetchInterests(String userEmail) async {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  try {
-    DocumentSnapshot documentSnapshot = await firestore
-        .collection('users') // Your collection name
-        .doc(userEmail) // Document ID is the user's email in this case
-        .get();
-
-    if (documentSnapshot.exists) {
-      List<dynamic> interest = documentSnapshot.get('interest');
-
-      return interest is List && interest.every((item) => item is String)
-          ? List<String>.from(interest)
-          : [];
-    } else {
-      print('Document does not exist');
-      return [];
-    }
-  } catch (error) {
-    print('Failed to retrieve interests: $error');
-    return [];
-  }
-}
-
- void call()async{
-  subtitles=  await fetchInterests("mukilan@gmail.com");
-  
-  print(subtitles);
-  
- }
-  
-
+  late List<String> subtitles;
   @override
-  void initState(){
+  void initState() {
+    // TODO: implement initState
     super.initState();
-   
-    call();
-    
-    
-
+    subtitles =widget.subtitles1;
   }
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar (title : Text("News",style: TextStyle(color:Colors.white,fontFamily: "Pacifico",fontSize: 35),),
-      
-      backgroundColor: Colors.black,
-      //add a button in the appbar
-      actions:[IconButton(onPressed: (){
-          Navigator.pop(context);
-          
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Interest()));
-      }, icon: Icon(Icons.abc_outlined,color: Colors.white,)),
-      
-      IconButton(onPressed: (){
-        //logout from firebase
-        FirebaseAuth auth = FirebaseAuth.instance;
-        auth.signOut().then((value) async {
-          Navigator.pop(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcomepage()));
-
-        });
-        
-      }, icon: Icon(Icons.logout_outlined,color: Colors.white,))]
+      appBar: AppBar(
+        title: Text(
+          "News",
+          style: TextStyle(
+            color: Color.fromARGB(255, 112, 112, 112),
+            fontFamily: "Pacifico",
+            fontSize: 35,
+          ),
+        ),
+        backgroundColor: Colors.black,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Interest()));
+            },
+            icon: Icon(Icons.abc_outlined, color: Color.fromARGB(255, 112, 112, 112)),
+          ),
+          IconButton(
+            onPressed: () {
+              FirebaseAuth auth = FirebaseAuth.instance;
+              auth.signOut().then((value) async {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Welcomepage()));
+              });
+            },
+            icon: Icon(Icons.logout_outlined, color: Color.fromARGB(255, 112, 112, 112)),
+          ),
+        ],
       ),
-      
 
       backgroundColor: kBackgroundcolor,
       body:Column(
