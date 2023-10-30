@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import "constants.dart";
 class Newspage extends StatefulWidget {
@@ -66,10 +69,13 @@ class _NewspageState extends State<Newspage> {
             },
           ),
           Expanded(
-            child: NewsList(category: selectedCategory),
+            child: NewsList(category: selectedCategory,article:articles),
           ),
           ElevatedButton(onPressed: (){
-            getnews();
+            setState(() {
+              getnews(selectedCategory);
+            });
+            
           }, child: Text("get the news")),
         ],
       ),
@@ -79,13 +85,17 @@ class _NewspageState extends State<Newspage> {
 
 class NewsList extends StatelessWidget {
   final String category;
+  final List  article;
+  
+  
 
-  NewsList({required this.category});
+  NewsList({required this.category,required this.article});
 
   // Implement your logic to fetch news based on the category and display here
 
   @override
   Widget build(BuildContext context) {
+    
     return ListView.builder(
       itemCount: 10, // Adjust the number of items based on your data
       itemBuilder: (context, index) {
@@ -93,18 +103,26 @@ class NewsList extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
           child: Container(
            
-            height:300,
+            height:500,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.network("https://static.toiimg.com/thumb/imgsize-81054,msid-104771131,width-600,resizemode-4/104771131.jpg",scale: 1.6,),
+                SizedBox(height:20),
                 Expanded(
                   child: Container(
                     width:double.infinity,
                     
                     
-                    child:Center(child: Text("$category, $index",style: TextStyle(color: Colors.white),),),
+                    child:Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("$category, $index",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 30),),
+                        Text("$category, $index",style: TextStyle(color: Colors.white),),
+                      ],
+                    )
                 
                 
                   ),
@@ -194,3 +212,35 @@ class _ButtonRowState extends State<ButtonRow> {
     );
   }
 }
+List articles = [];
+void getnews(String cat) async {
+  String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
+  String category = "politics";
+  String url =
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=us&max=10&apikey=$apiKey";
+
+
+  var response = await http.get(Uri.parse(url));
+
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    
+    articles = data["articles"] ?? [];
+    
+
+    print(articles);
+    print("=========================================");
+    print("Title: ${articles[0]["title"]}");
+    print("Title: ${articles[0]["description"]}");
+    print("Title: ${articles[0]["content"]}");
+    print("==========================================");
+
+    // The loop will handle displaying all the articles returned by the request.
+  
+  } else {
+    print("Error: ${response.statusCode}");
+  }
+}
+
+

@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 const Color kBackgroundcolor =  Color.fromARGB(255, 10, 10, 10);
 const Color kContainercolor =  Color.fromARGB(255, 40, 40, 40);
 
@@ -124,28 +121,4 @@ Future<List<String>> fetchInterests(String userEmail) async {
 
 
 
-void getnews() async {
-  var apiKey = '5cd12da93d244661b22aee82f1d25961';
-  var baseUrl = 'https://newsapi.org/v2/';
-  var endpoint = 'top-headlines';
-  var queryParameters = {
-    'q': 'bitcoin',
-    'sources': 'bbc-news,the-verge',
-    'category': 'business',
-    'language': 'en',
-    'country': 'us',
-    'apiKey': apiKey,
-  };
 
-  var uri = Uri.parse('$baseUrl$endpoint').replace(queryParameters: queryParameters);
-  var response = await http.get(uri);
-
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    print('Top Headlines: $data');
-  } else {
-    print('Error: ${response.statusCode}');
-  }
-}
-
-//api key:5cd12da93d244661b22aee82f1d25961

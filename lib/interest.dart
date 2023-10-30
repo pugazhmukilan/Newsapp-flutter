@@ -47,13 +47,13 @@ class _InterestState extends State<Interest>{
                   children: [
                     Row(
                       children: [
-                        Selectionbutton( topic: 'Currency'),
+                        Selectionbutton( topic: 'Sports'),
                         Selectionbutton( topic: 'global'),
                       ],
                     ),
                     Row(
                       children: [
-                        Selectionbutton( topic: 'politics'),
+                        Selectionbutton( topic: 'Technology'),
                         Selectionbutton( topic: 'Sports'),
                       ],
                     ),

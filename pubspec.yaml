@@ -19,6 +19,9 @@ dependencies:
   flutter_card_swiper: ^6.0.0
   cached_network_image: ^3.2.3
   firebase_database: ^10.2.6
+  
+  http: ^0.13.3
+
 
 dev_dependencies:
   flutter_test:
