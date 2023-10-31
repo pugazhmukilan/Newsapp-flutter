@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import "package:firebase_auth/firebase_auth.dart";
 import 'package:flutter/material.dart';
 const Color kBackgroundcolor =  Color.fromARGB(255, 10, 10, 10);
 const Color kContainercolor =  Color.fromARGB(255, 40, 40, 40);
 
 const Color kWelcompagebutton = Color.fromARGB(255, 235, 235, 235);
-
+final _auth = FirebaseAuth.instance;
 
 //SELECTION BUTTON COLORS
 MaterialStateProperty <Color> unpressedcolor =  MaterialStatePropertyAll(const Color.fromARGB(255, 36, 36, 36));
@@ -122,3 +123,13 @@ Future<List<String>> fetchInterests(String userEmail) async {
 
 
 
+void firbaselogout() async {
+  try {
+    await FirebaseAuth.instance.signOut();
+    // Navigate to the login or home page after successful logout
+    // Example: Navigator.pushReplacementNamed(context, '/login');
+  } catch (e) {
+    print("Error during logout: $e");
+    // Handle the error, if any
+  }
+}

@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:news_app/interest.dart';
+import 'package:news_app/welcomepage.dart';
 
 import "constants.dart";
+import "errorpage.dart";
 class Newspage extends StatefulWidget {
   late List<String> subtitles1;
   Newspage({required this.subtitles1});
@@ -15,13 +18,20 @@ class Newspage extends StatefulWidget {
 class _NewspageState extends State<Newspage> {
   late List<String> subtitles;
   late String selectedCategory;
+ 
 
-  @override
-  void initState() {
-    super.initState();
-    subtitles = widget.subtitles1;
-    selectedCategory = subtitles.first; // Set the default category
-  }
+ @override
+void initState() {
+  super.initState();
+
+  subtitles = widget.subtitles1;
+  selectedCategory = subtitles.first;
+  print(selectedCategory);
+
+  Future.delayed(Duration.zero, () async {
+    await getnews(context,selectedCategory);
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +49,15 @@ class _NewspageState extends State<Newspage> {
         actions: [
           IconButton(
             onPressed: () {
-              // ... (your existing code for Interest page)
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Interest()));
             },
             icon: Icon(Icons.abc_outlined, color: Color.fromARGB(255, 255, 255, 255)),
           ),
           IconButton(
             onPressed: () {
-              // ... (your existing code for logout)
+             Navigator.pop(context);
+             Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcomepage()));
             },
             icon: Icon(Icons.logout_outlined, color: Color.fromARGB(255, 255, 255, 255)),
           ),
@@ -71,12 +83,7 @@ class _NewspageState extends State<Newspage> {
           Expanded(
             child: NewsList(category: selectedCategory,article:articles),
           ),
-          ElevatedButton(onPressed: (){
-            setState(() {
-              getnews(selectedCategory);
-            });
-            
-          }, child: Text("get the news")),
+          
         ],
       ),
     );
@@ -85,57 +92,60 @@ class _NewspageState extends State<Newspage> {
 
 class NewsList extends StatelessWidget {
   final String category;
-  final List  article;
-  
-  
+  final List article;
 
-  NewsList({required this.category,required this.article});
-
-  // Implement your logic to fetch news based on the category and display here
+  NewsList({required this.category, required this.article});
 
   @override
   Widget build(BuildContext context) {
-    
     return ListView.builder(
-      itemCount: 10, // Adjust the number of items based on your data
+      itemCount: article.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-          child: Container(
-           
-            height:500,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.network("https://static.toiimg.com/thumb/imgsize-81054,msid-104771131,width-600,resizemode-4/104771131.jpg",scale: 1.6,),
-                SizedBox(height:20),
-                Expanded(
-                  child: Container(
-                    width:double.infinity,
-                    
-                    
-                    child:Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("$category, $index",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 30),),
-                        Text("$category, $index",style: TextStyle(color: Colors.white),),
-                      ],
-                    )
-                
-                
+        if (article.isNotEmpty) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+            child: Container(
+              height: 500,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.network(article[index]["image"], scale: 1.6),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(article[index]['title'],
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),
+                            ),
+                            Text(article[index]['description'], style: TextStyle(color: Colors.white)),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          return Container(
+            // Placeholder widget or message when articles are empty
+            child: Center(
+              child: Text("No articles available"),
+            ),
+          );
+        }
       },
     );
   }
 }
-
 class ButtonRow extends StatefulWidget {
   late List<String> listname;
   late double height;
@@ -162,11 +172,15 @@ class ButtonRow extends StatefulWidget {
 }
 
 class _ButtonRowState extends State<ButtonRow> {
-  late String selectedButton = widget.defaultbutton; // Default selected button
+  late String selectedButton = widget.defaultbutton;
+  //create initistate()
+  
 
   void _handleButtonPress(String buttonName) {
     setState(() {
       selectedButton = buttonName;
+      print(buttonName);
+      getnews(context,buttonName);
       widget.onCategorySelected(buttonName);
     });
   }
@@ -213,11 +227,12 @@ class _ButtonRowState extends State<ButtonRow> {
   }
 }
 List articles = [];
-void getnews(String cat) async {
+getnews(BuildContext context, String cat) async {
   String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
-  String category = "politics";
+  print("cat+++++++++++++++++++++++++++++++++++++++++++"+cat);
+  String category = cat;
   String url =
-      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=us&max=10&apikey=$apiKey";
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&max=10&apikey=$apiKey";
 
 
   var response = await http.get(Uri.parse(url));
@@ -229,15 +244,64 @@ void getnews(String cat) async {
     articles = data["articles"] ?? [];
     
 
-    print(articles);
-    print("=========================================");
-    print("Title: ${articles[0]["title"]}");
-    print("Title: ${articles[0]["description"]}");
-    print("Title: ${articles[0]["content"]}");
-    print("==========================================");
+
 
     // The loop will handle displaying all the articles returned by the request.
+  for (var article in articles) {
+      print("Title: ${article['title']}");
+      
+      // Add more properties as needed
+      print("");
+    }
+  } else {
+    print("Error: ${response.statusCode}");
+    if (response.statusCode == 403){
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Your API call limit breached!"),
+            ),
+    );
+    }
+    else{
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Error found try again after some time"),
+            ),
+    );
+      
+    }
+     
+  }
+}
+
+getnews1() async {
+  String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
   
+  String category = "politics";
+  String url =
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&max=10&apikey=$apiKey";
+
+
+  var response = await http.get(Uri.parse(url));
+
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    
+    articles = data["articles"] ?? [];
+    
+
+
+
+    // The loop will handle displaying all the articles returned by the request.
+  for (var article in articles) {
+      print("Title: ${article['title']}");
+      
+      // Add more properties as needed
+      print("");
+    }
   } else {
     print("Error: ${response.statusCode}");
   }

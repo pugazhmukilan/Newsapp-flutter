@@ -63,9 +63,11 @@ class _Newsloadstate extends State<Newsloader> {
       return Text('Error: ${snapshot.error}');
     } else {
       subtitles = List<String>.from(snapshot.data as Iterable<dynamic>);
-
       Future.delayed(Duration.zero, () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Newspage(subtitles1: subtitles,)));
+
+                Navigator.pop(context);
+                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Newspage(subtitles1: subtitles,)));
               });
       // Handle the case where the future completes successfully
       

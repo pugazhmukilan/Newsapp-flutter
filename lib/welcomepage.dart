@@ -70,6 +70,7 @@ class _WelcomepageState extends State<Welcomepage>with TickerProviderStateMixin 
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CustomButton(onPressed: (){
+                  Navigator.pop(context);
                   Navigator.push(context,MaterialPageRoute(builder: (context)=>Login()));
                 }, colours: kWelcompagebutton
                 , text: "Login"),
@@ -77,7 +78,7 @@ class _WelcomepageState extends State<Welcomepage>with TickerProviderStateMixin 
                   height: 40,
                 ),
                 CustomButton(onPressed: (){
-                
+                Navigator.pop(context);
                   Navigator.push(context,MaterialPageRoute(builder: (context)=>Signup()));
                 }, colours: kWelcompagebutton
                 , text: "Signup"),

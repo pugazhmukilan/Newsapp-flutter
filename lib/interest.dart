@@ -12,8 +12,16 @@ class Interest extends StatefulWidget{
   @override
   _InterestState createState() => _InterestState();
 }
-
+ 
 class _InterestState extends State<Interest>{
+@override
+ void initistate(){
+  super.initState();
+  
+  interest.clear();
+  print(interest);
+ }
+
   @override
   Widget build(BuildContext context){
   
@@ -48,26 +56,22 @@ class _InterestState extends State<Interest>{
                     Row(
                       children: [
                         Selectionbutton( topic: 'Sports'),
-                        Selectionbutton( topic: 'global'),
+                        Selectionbutton( topic: 'general'),
                       ],
                     ),
                     Row(
                       children: [
                         Selectionbutton( topic: 'Technology'),
-                        Selectionbutton( topic: 'Sports'),
+                        Selectionbutton( topic: 'Currency'),
                       ],
                     ),
                     Row(
                       children: [
-                        Selectionbutton( topic: 'technology'),
-                        Selectionbutton( topic: 'forgiena affairs'),
+                        Selectionbutton( topic: 'politics'),
+                        
                       ],
                     ),
-                    Row(
-                      children: [
-                        Selectionbutton( topic: 'time'),
-                        Selectionbutton( topic: 'time'),                      ],
-                    ),
+                    
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: ElevatedButton(onPressed: ()async{
