@@ -83,6 +83,9 @@ void initState() {
           Expanded(
             child: NewsList(category: selectedCategory,article:articles),
           ),
+          ElevatedButton(onPressed: (){
+            getnews1();
+          }, child: Text("get news)")),
           
         ],
       ),
@@ -232,7 +235,7 @@ getnews(BuildContext context, String cat) async {
   print("cat+++++++++++++++++++++++++++++++++++++++++++"+cat);
   String category = cat;
   String url =
-      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&max=10&apikey=$apiKey";
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=us&max=10&apikey=$apiKey";
 
 
   var response = await http.get(Uri.parse(url));
@@ -277,14 +280,16 @@ getnews(BuildContext context, String cat) async {
 }
 
 getnews1() async {
+  print("from+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ politics");
+  print("from+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
   String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
   
-  String category = "politics";
+  String category = "currency";
   String url =
-      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&max=10&apikey=$apiKey";
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=us&max=10&apikey=$apiKey";
 
 
-  var response = await http.get(Uri.parse(url));
+  var response = await http.get(Uri.parse(url));  
 
 
   if (response.statusCode == 200) {
