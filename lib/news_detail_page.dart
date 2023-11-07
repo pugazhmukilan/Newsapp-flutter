@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:news_app/constants.dart";
+import 'package:url_launcher/url_launcher.dart';
 
 import "interest.dart";
 import "welcomepage.dart";
@@ -89,13 +90,19 @@ class _DetailState extends State<Detail> {
               ],
             )
           ),
-         Padding(
+        Padding(
             padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
             child: Column(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("SOURCE URL LINK: ",style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),),
-                Text("${widget.sourceurl}",style: TextStyle(color: Color.fromARGB(255, 50, 252, 0),fontWeight: FontWeight.w700, fontSize: 10),),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: kBackgroundcolor),
+                  onPressed: () async {
+                    print("launching the url");
+                    await launch("${widget.sourceurl}");
+                  },
+                  child: Text('Learn more!'),
+                ),
               ],
             )
           ),
@@ -111,3 +118,5 @@ class _DetailState extends State<Detail> {
         ) ;
   }
 }
+
+

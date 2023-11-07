@@ -74,7 +74,9 @@ class _InterestState extends State<Interest>{
                     ),
                     Row(
                       children: [
-                        Selectionbutton(topic: 'Science and health'),
+                        Selectionbutton(topic: 'Scienceandhealth'),
+                        Selectionbutton(topic: 'cricket'),
+
                       ],
                     ),
                     

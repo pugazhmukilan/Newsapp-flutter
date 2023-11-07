@@ -125,7 +125,7 @@ class _NewsListState extends State<NewsList> {
                 sourceurl:widget.article[index]['url']),),);
               },
               child: Container(
-                height: 500,
+                height: 550,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -253,12 +253,88 @@ class _ButtonRowState extends State<ButtonRow> {
 List articles = [];
 getnews(BuildContext context, String cat) async {
   articles=[];
+  late String url;
   String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
   print("fetching news from the "+cat);
   String category = cat;
-  String url =
-      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&max=10&apikey=$apiKey";
+  if (category=="Entertainment"){
+    print("********************************************************");
+    print("                  ENTERTAINMENT                         "); 
+    print("********************************************************");
+    url=
+      url=
+      "https://gnews.io/api/v4/top-headlines?q=entertainment&lang=en&country=in&max=10&apikey=$apiKey";
 
+  }
+  else if (category =="cricket"){
+    print("********************************************************");
+    print("                         CRICKET                         ");
+    print("********************************************************");
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=sports&q=cricket&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  else if (category =="Sports"){
+    print("********************************************************");
+    print("                         SPORTS                         ");
+    print("********************************************************");
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=sports&q=swimming&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  else if (category =="World"){
+    print("********************************************************");
+    print("                         WORLD                         ");
+    print("********************************************************");
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=world&q=politics&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  else if (category =="Nation"){
+    print("********************************************************");
+    print("                         NATION                         ");
+    print("********************************************************");
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=nation&q=politics&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  else if(category =="general"){
+    print("********************************************************");
+    print("                         GENERAL                         ");
+    print("********************************************************");
+    url=
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=general&q=world&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  else if(category =="Technology"){
+    print("********************************************************");
+    print("                         TECHNOLOGY                     ");
+    print("********************************************************");
+    url=
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=technology&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  else if(category =="Scienceandhealth"){
+    print("********************************************************");
+    print("                 SCIENCE AND HEALTH                     ");
+    print("********************************************************");
+    url=
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=scienceandhealth&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  else{
+    print("********************************************************");
+    print("                         ELSE                          ");
+    print("********************************************************");
+    url=
+    url=
+      "https://gnews.io/api/v4/top-headlines?category=sports&q=badminton&lang=en&country=in&max=10&apikey=$apiKey";
+
+  }
+  
 
   var response = await http.get(Uri.parse(url));
 
@@ -340,14 +416,16 @@ getnews(BuildContext context, String cat) async {
   }
 }
 
-/*getnews1(String cat) async {
+/*getnews1() async {
   //general, world, nation, business, technology, entertainment, sports, science and health.
   
   
   String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
   
-  String category = cat;
+  String category = 'sports';
   print("from get news+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ $category");
+   print("from get news+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ $category");
+    print("from get news+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ $category");
   String url =
 
   //small change is doen check it out
