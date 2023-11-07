@@ -5,7 +5,7 @@ import "package:news_app/constants.dart";
 
 import 'news_loader.dart';
 final _auth = FirebaseAuth.instance;
-
+List <String> interest =[];//empty string
 
 class Interest extends StatefulWidget{
 
@@ -14,12 +14,12 @@ class Interest extends StatefulWidget{
 }
  
 class _InterestState extends State<Interest>{
-@override
- void initistate(){
+ @override
+ void initState(){
   super.initState();
-  
-  interest.clear();
-  print(interest);
+  interest = []; // Initialize the interest list to be empty
+  print("Printing inside the initState");
+ 
  }
 
   @override
@@ -61,14 +61,20 @@ class _InterestState extends State<Interest>{
                     ),
                     Row(
                       children: [
-                        Selectionbutton( topic: 'Technology'),
-                        Selectionbutton( topic: 'Currency'),
+                        Selectionbutton( topic: 'Nation'),
+                        Selectionbutton( topic: 'World'),
                       ],
                     ),
                     Row(
                       children: [
-                        Selectionbutton( topic: 'politics'),
+                        Selectionbutton( topic: 'Technology'),
+                        Selectionbutton(topic: 'Entertainment')
                         
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Selectionbutton(topic: 'Science and health'),
                       ],
                     ),
                     
@@ -146,7 +152,7 @@ Future<void> insertOrUpdateArrayData() async {
 //BUTTON FOR EACH INTEREST
 
 
-List <String> interest =[];
+
 
   class Selectionbutton extends StatefulWidget {
   @override

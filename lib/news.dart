@@ -7,6 +7,7 @@ import 'package:news_app/welcomepage.dart';
 
 import "constants.dart";
 import "errorpage.dart";
+import "news_detail_page.dart";
 class Newspage extends StatefulWidget {
   late List<String> subtitles1;
   Newspage({required this.subtitles1});
@@ -56,8 +57,8 @@ void initState() {
           ),
           IconButton(
             onPressed: () {
-             Navigator.pop(context);
-             Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcomepage()));
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Welcomepage()));
             },
             icon: Icon(Icons.logout_outlined, color: Color.fromARGB(255, 255, 255, 255)),
           ),
@@ -79,13 +80,10 @@ void initState() {
                 selectedCategory = category;
               });
             },
+            
           ),
-          Expanded(
-            child: NewsList(category: selectedCategory,article:articles),
-          ),
-          ElevatedButton(onPressed: (){
-            getnews1();
-          }, child: Text("get news)")),
+          Expanded(child: NewsList(category: selectedCategory,article: articles,),),
+          
           
         ],
       ),
@@ -93,47 +91,67 @@ void initState() {
   }
 }
 
-class NewsList extends StatelessWidget {
+class NewsList extends StatefulWidget {
   final String category;
   final List article;
 
   NewsList({required this.category, required this.article});
 
   @override
+  _NewsListState createState() => _NewsListState();
+}
+
+class _NewsListState extends State<NewsList> {
+  @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: article.length,
+      itemCount: widget.article.length,
       itemBuilder: (context, index) {
-        if (article.isNotEmpty) {
+        if (widget.article.isNotEmpty) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-            child: Container(
-              height: 500,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.network(article[index]["image"], scale: 1.6),
-                  SizedBox(height: 20),
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(article[index]['title'],
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: kBackgroundcolor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0), // Adjust the radius as needed
+              ),),
+              onPressed: (){
+                print("priting the enetire content of the news");
+                print(widget.article[index]['content'] ?? "");
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(image: widget.article[index]["image"],
+                title: widget.article[index]['title'],
+                content:  widget.article[index]['content'] ?? "",
+                sourcename: widget.article[index]['source']['name'],
+                sourceurl:widget.article[index]['url']),),);
+              },
+              child: Container(
+                height: 500,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.network(widget.article[index]["image"], scale: 1.6),
+                    SizedBox(height: 20),
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(widget.article[index]['title'],
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),
-                            ),
-                            Text(article[index]['description'], style: TextStyle(color: Colors.white)),
-                          ],
+                              ),
+                              Text(widget.article[index]['description'], style: TextStyle(color: Colors.white)),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
@@ -149,6 +167,7 @@ class NewsList extends StatelessWidget {
     );
   }
 }
+
 class ButtonRow extends StatefulWidget {
   late List<String> listname;
   late double height;
@@ -158,7 +177,7 @@ class ButtonRow extends StatefulWidget {
   late Color textnotselected;
   late String defaultbutton;
   final Function(String) onCategorySelected;
-
+  
   ButtonRow({
     required this.listname,
     required this.height,
@@ -168,6 +187,7 @@ class ButtonRow extends StatefulWidget {
     required this.textnotselected,
     required this.defaultbutton,
     required this.onCategorySelected,
+    
   });
 
   @override
@@ -176,17 +196,18 @@ class ButtonRow extends StatefulWidget {
 
 class _ButtonRowState extends State<ButtonRow> {
   late String selectedButton = widget.defaultbutton;
-  //create initistate()
-  
 
   void _handleButtonPress(String buttonName) {
+  selectedButton = buttonName;
+  getnews(context, buttonName).then((_) {
     setState(() {
-      selectedButton = buttonName;
-      print(buttonName);
-      getnews(context,buttonName);
+      
+      print("selected button: $buttonName");
       widget.onCategorySelected(buttonName);
+      // widget.onButtonPressed(); // No need to call this, as setState triggers a rebuild
     });
-  }
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -231,11 +252,12 @@ class _ButtonRowState extends State<ButtonRow> {
 }
 List articles = [];
 getnews(BuildContext context, String cat) async {
+  articles=[];
   String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
-  print("cat+++++++++++++++++++++++++++++++++++++++++++"+cat);
+  print("fetching news from the "+cat);
   String category = cat;
   String url =
-      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=us&max=10&apikey=$apiKey";
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&max=10&apikey=$apiKey";
 
 
   var response = await http.get(Uri.parse(url));
@@ -245,13 +267,19 @@ getnews(BuildContext context, String cat) async {
     var data = json.decode(response.body);
     
     articles = data["articles"] ?? [];
+    print(articles);
     
-
+    
+  //await Future.delayed(Duration(seconds: 2));
 
 
     // The loop will handle displaying all the articles returned by the request.
   for (var article in articles) {
       print("Title: ${article['title']}");
+      print("content: ${article['content']??""}");
+      print("source: ${article['source']}");
+      print("url: ${article['url']}");
+
       
       // Add more properties as needed
       print("");
@@ -266,11 +294,44 @@ getnews(BuildContext context, String cat) async {
             ),
     );
     }
+    else if (response.statusCode == 400){
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Bad Request --your request is invalid"),
+            ),
+    );
+    }
+    else if (response.statusCode == 429){
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Too Many request Per Second"),
+            ),
+    );
+    }
+    else if (response.statusCode == 500){
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Internal Server error"),
+            ),
+    );
+    }
+    else if (response.statusCode == 503){
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Service unavaiable temporarily offile"),
+            ),
+    );
+    }
+    
     else{
       Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Error found try again after some time"),
+              builder: (context) => Errorpage(errormessage: "${response.statusCode}",submessage:"Something went wrong"),
             ),
     );
       
@@ -279,14 +340,18 @@ getnews(BuildContext context, String cat) async {
   }
 }
 
-getnews1() async {
-  print("from+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ politics");
-  print("from+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+/*getnews1(String cat) async {
+  //general, world, nation, business, technology, entertainment, sports, science and health.
+  
+  
   String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
   
-  String category = "currency";
+  String category = cat;
+  print("from get news+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ $category");
   String url =
-      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=us&max=10&apikey=$apiKey";
+
+  //small change is doen check it out
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&apikey=$apiKey";
 
 
   var response = await http.get(Uri.parse(url));  
@@ -310,6 +375,81 @@ getnews1() async {
   } else {
     print("Error: ${response.statusCode}");
   }
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Future<void> getNews(BuildContext context, String cat) async {
+  articles = [];
+  String apiKey = "96d23f736a4bf75fe969ae5ee5c85761";
+  print("fetching news from the " + cat);
+  String category = cat;
+  String url =
+      "https://gnews.io/api/v4/top-headlines?category=$category&lang=en&country=in&max=10&apikey=$apiKey";
+
+  var response = await http.get(Uri.parse(url));
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    var articlesData = data["articles"] ?? [];
+
+    // Fetch the full content for each article
+    await fetchFullContents(articlesData);
+
+   
+      articles = articlesData;
+    
+  } else {
+    print("Error: ${response.statusCode}");
+    // Handle errors and navigate to error page...
+  }
+}
+
+Future<void> fetchFullContents(List<dynamic> articlesData) async {
+  for (int index = 0; index < articlesData.length; index++) {
+    var articleUrl = articlesData[index]["url"];
+    var response = await http.get(Uri.parse(articleUrl));
+
+    if (response.statusCode == 200) {
+      var fullArticle = json.decode(response.body);
+      
+        articlesData[index]['content'] = fullArticle['content'];
+      
+    } else {
+      // Handle errors fetching full content...
+      print("Error fetching full article: ${response.statusCode}");
+    }
+  }
 }
 
 
+
+*/
